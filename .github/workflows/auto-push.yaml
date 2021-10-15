@@ -1,0 +1,13 @@
+name: Auto PR test
+
+on:
+  pull_request:
+    branches: main
+    types: [closed]
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: ${{ toJson(github) }}
