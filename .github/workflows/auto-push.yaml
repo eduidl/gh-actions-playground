@@ -8,6 +8,17 @@ on:
 jobs:
   pull-request:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
 
     steps:
-      - run: ${{ toJson(github) }}
+      - uses: actions/checkout@v2
+
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: develop
+          pr_title: Merge ${{ github.base_ref }} into develop
+          pr_body: "#${{ github.event.pull_request.number }}"
+          pr_assignee: eduidl
+          pr_label: auto-pr
+          github_token: ${{ secrets.GITHUB_TOKEN }}
